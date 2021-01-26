@@ -21,15 +21,19 @@ http.createServer(function(req, res) {
     path = req.url.replace(/\/?(?:\?.*)?$/, '').toLowerCase();
     switch (path) {
         case '':
+            console.log(req.url)
             serveStaticFile(res, '/public/home.html', 'text/html');
             break;
         case '/about':
+            console.log(req.url)
             serveStaticFile(res, '/public/about.html', 'text/html');
             break;
         case '/img/logo.jpg':
+            console.log(req.url)
             serveStaticFile(res, '/public/img/logo.jpg', 'image/jpeg');
             break;
         default:
+            console.log(req.url)
             serveStaticFile(res, '/public/404.html', 'text/html', 404);
             break;
     }
