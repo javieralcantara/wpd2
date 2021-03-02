@@ -1,4 +1,5 @@
 const nedb = require("nedb");
+const { resolve } = require("path");
 
 class GuestBook {
     constructor(dbFieldPath) {
@@ -18,6 +19,24 @@ class GuestBook {
             publihsed: "2021-03-02",
             author: "Peter"
         });
+        console.log("db entry Peter inserted");
         // minute 24.52 lab5
     }
+
+    getAllEntries() {
+        return new Promise((resolve, reject) => {
+            this.db.find({}, function(err, entries) {
+                if(err) {
+                    reject(err);
+                    console.log("Promise rejected in getAllEntries");
+                } else {
+                    resolve(entries);
+                    console.log("Promise resolved in getAllEntries", entries);
+                }
+                //minute 58.09 lab5
+            })
+        })
+    }
 }
+
+module.exports = GuestBook;

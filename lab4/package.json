@@ -11,13 +11,14 @@
   "keywords": [
     "node.js",
     "express",
-    "mvc"
+    "mvc",
+    "nedb"
   ],
   "dependencies": {
     "express": "^4.17.1",
+    "nedb": "^1.8.0",
     "nodeman": "^1.1.2",
     "nodemon": "^2.0.7",
-    "path": "^0.12.7",
-    "nedb": "^1.8.0"
+    "path": "^0.12.7"
   }
 }
