@@ -19,7 +19,13 @@ class GuestBook {
             publihsed: "2021-03-02",
             author: "Peter"
         });
-        console.log("db entry Peter inserted");
+        this.db.insert({
+            subject: "I didn\'t like the exhibition",
+            contents: "boring",
+            publihsed: "2021-03-03",
+            author: "Jake"
+        });
+        console.log("db entries inserted");
         // minute 24.52 lab5
     }
 
@@ -31,9 +37,23 @@ class GuestBook {
                     console.log("Promise rejected in getAllEntries");
                 } else {
                     resolve(entries);
-                    console.log("Promise resolved in getAllEntries", entries);
+                    console.log("Promise resolved in getAllEntries");
                 }
                 //minute 58.09 lab5
+            })
+        })
+    }
+
+    getEntriesByAuthor(name) {
+        return new Promise((resolve, reject) => {
+            this.db.find({author: name}, function(err, entries) {
+                if(err) {
+                    reject(err);
+                    console.log("Promise rejected in getPetersEntries");
+                } else {
+                    resolve(entries);
+                    console.log("Promise resolved in getPetersEntries");
+                }
             })
         })
     }
