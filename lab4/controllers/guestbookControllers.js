@@ -1,3 +1,4 @@
+const { response } = require("express");
 const guestbookDAO = require("../models/guestbookModel")
 const db = new guestbookDAO();
 
@@ -8,9 +9,14 @@ exports.landing_page = function(req, res) {
 }
 
 exports.guestbook_page = function(req, res) {
-    res.send('<h1>Guest Book Page</h1>');
     db.getAllEntries().then((entries) => {
-        console.log("controller.guestbook_page received data: ", entries);
+        res.render('guestbook', {
+            'title': 'Guest Book',
+            'entries': entries,
+        });
+        console.log('promise resolved with:', entries);
+    }).catch((err) => {
+        console.log('promise rejected with:', err);
     });
 }
 
@@ -18,23 +24,33 @@ exports.about_page = function(req, res) {
     res.redirect('/about.html');
 }
 
-exports.new_page = function(req, res) {
-    res.send('<h1>You have reached our new page!</h1>');
+exports.new_entry = function(req, res) {
+    res.render('newentry', {'title': 'Guest Book'});
 }
 
-exports.peter_page = function(req, res) {
-    res.send('<h1>Peter\'s entries</h1>');
-    db.getEntriesByAuthor("Peter").then((entries) => {
-        console.log("controller.peter_page received data: ", entries);
+exports.post_new_entry = function(req, res) {
+    console.log('processing post-new_entry controller');
 
-    })
+    if (!req.body.author) {
+        response.status(400).send('Entries must have an author.');
+    }
+
+    db.addEntry(req.body.subject, req.body.contents, req.body.author);
+    res.redirect('/');
 }
 
-exports.jake_page = function(req, res) {
-    res.send('<h1>Jake\'s entries</h1>');
-    db.getEntriesByAuthor("Jake").then((entries) => {
-        console.log("controller.jake_page received data: ", entries);
+exports.show_user_entries = function(req, res) {
+    console.log('filtering author name', req.params.author);
 
-    })
+    let user = req.params.author;
+    db.getEntriesByAuthor(user).then((entries) => {
+        res.render('guestbook', {
+            'title': 'Guest Book',
+            'entries': entries,
+        });
+        console.log('promise resolved with:', entries);
+    }).catch((err) => {
+        console.log('promise rejected with:', err);
+    });
 }
 
