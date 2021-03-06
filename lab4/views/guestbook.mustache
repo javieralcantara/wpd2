@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    {{>header}}
+</head>
+<body class="container">
+    <h1>{{title}}</h1>
+    <div class= "text-right">
+        <a href="/new-entry" class="btn btn-primary">
+            Write in the guest book 
+        </a>
+    </div>
+    {{#entries}}
+    <div class="card">
+        <div class="card-header">
+            {{subject}}
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                {{contents}}
+            </div>
+            <div class="card-text">
+                Written by <a href="/posts/{{author}}">{{author}}</a> , on {{published}}
+            </div>
+        </div>
+    </div>
+    {{/entries}}
+    {{^entries}}
+        <div>
+            No entries yet.
+        </div>
+    {{/entries}}
+    </body>
+    </html>
